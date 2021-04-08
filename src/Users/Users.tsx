@@ -45,7 +45,7 @@ const Users = () => {
       break;
   }
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" className={classes.container}>
       <div className={classes.header}>
         <CustomSwitch />
         <span className={classes.navWrapper}>
@@ -83,6 +83,9 @@ const Users = () => {
 export default Users;
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: 0,
+  },
   header: {
     display: "flex",
     justifyContent: "space-between",

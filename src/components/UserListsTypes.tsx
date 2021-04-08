@@ -47,7 +47,9 @@ export const UsersList = ({ data }: { data: { data: User[] } }) => {
       display: "inline-block",
     },
     p: {
-      margin: "3px",
+      padding: "0 3px",
+      margin: 0,
+      marginBottom: 3,
       width: 240,
       overflow: "hidden",
       textOverflow: "ellipsis",
@@ -122,7 +124,9 @@ export const UsersListIcon = ({ data }: { data: { data: User[] } }) => {
       alignItems: "center",
     },
     p: {
-      margin: "3px",
+      padding: "0 3px",
+      margin: 0,
+      marginBottom: 8,
       maxWidth: 280,
       overflow: "hidden",
       textOverflow: "ellipsis",
