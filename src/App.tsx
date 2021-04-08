@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -15,7 +14,6 @@ import { LoadingModal } from "components/Loading";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [page, setPage] = useState(1);
   const { isDarkTheme, isLoading } = useContext(myContext);
 
   const theme = createMuiTheme({
@@ -39,7 +37,7 @@ const App = () => {
           <Router basename="/testTask">
             <Switch>
               <Route exact path="/">
-                <Users page={page} setPage={setPage} />
+                <Users />
               </Route>
               <Route path="/user/:id" children={<User />} />
             </Switch>

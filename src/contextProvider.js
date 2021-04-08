@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 export const myContext = React.createContext();
 
-const ContextProvider = (props) => {
+export const ContextProvider = (props) => {
   const [viewType, setViewType] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
   return (
     <myContext.Provider
       value={{
@@ -14,11 +15,11 @@ const ContextProvider = (props) => {
         setIsDarkTheme,
         isLoading,
         setIsLoading,
+        page,
+        setPage,
       }}
     >
       {props.children}
     </myContext.Provider>
   );
 };
-
-export default ContextProvider;

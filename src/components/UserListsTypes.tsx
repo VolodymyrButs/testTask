@@ -26,6 +26,7 @@ export const UsersList = ({ data }: { data: { data: User[] } }) => {
       textDecoration: "none",
     },
     item: {
+      display: "flex",
       margin: "5px",
       padding: "16px",
       boxShadow: "inset 0 0 10px #888",
@@ -47,7 +48,7 @@ export const UsersList = ({ data }: { data: { data: User[] } }) => {
     },
     p: {
       margin: "3px",
-      width: 250,
+      width: 240,
       overflow: "hidden",
       textOverflow: "ellipsis",
       color: theme.palette.text.primary,

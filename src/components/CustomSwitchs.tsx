@@ -8,7 +8,7 @@ import { IconButton } from "@material-ui/core";
 
 const SwitchWrapperTheme = withStyles((theme) => ({
   root: {
-    marginLeft: 10,
+    marginLeft: 5,
     [theme.breakpoints.up("sm")]: {
       marginLeft: 110,
     },
@@ -24,8 +24,8 @@ const Icon = withStyles((theme) => ({
       padding: 12,
     },
   },
-}))(({ classes, ...props }: { classes: any }) => {
-  return <IconButton className={classes.root} {...props} />;
+}))(({ classes, onClick, ...props }: { classes: any; onClick: () => void }) => {
+  return <IconButton className={classes.root} onClick={onClick} {...props} />;
 });
 
 const SwitchStyled = withStyles((theme) => ({
@@ -102,8 +102,8 @@ export const CustomSwitch = () => {
   const { viewType, setViewType } = useContext(myContext);
   return (
     <span>
-      <Icon>
-        <Apps onClick={() => setViewType(false)} />
+      <Icon onClick={() => setViewType(false)}>
+        <Apps />
       </Icon>
       <span>
         <SwitchStyled
@@ -111,8 +111,8 @@ export const CustomSwitch = () => {
           onChange={() => setViewType(!viewType)}
         />
       </span>
-      <Icon>
-        <Menu onClick={() => setViewType(true)} />
+      <Icon onClick={() => setViewType(true)}>
+        <Menu />
       </Icon>
     </span>
   );
@@ -122,9 +122,9 @@ export const CustomSwitchTheme = () => {
   const { isDarkTheme, setIsDarkTheme } = useContext(myContext);
   return (
     <SwitchWrapperTheme>
-      <IconButton onClick={() => setIsDarkTheme(!isDarkTheme)}>
+      <Icon onClick={() => setIsDarkTheme(!isDarkTheme)}>
         <Brightness6 />
-      </IconButton>
+      </Icon>
     </SwitchWrapperTheme>
   );
 };

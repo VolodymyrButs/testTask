@@ -8,22 +8,19 @@ import { myContext } from "contextProvider";
 import { UsersList, UsersListIcon } from "components/UserListsTypes";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
-async function fetchUsers(page = 1) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const { data } = await axios.get(`https://reqres.in/api/users?page=${page}`);
-  return data;
-}
 
-const Users = ({
-  page,
-  setPage,
-}: {
-  page: number;
-  setPage: (args: number) => void;
-}) => {
+const Users = () => {
   const queryClient = useQueryClient();
   const classes = useStyles();
-  const { viewType, setIsLoading } = useContext(myContext);
+  const { viewType, setIsLoading, page, setPage } = useContext(myContext);
+
+  async function fetchUsers(page: number) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const { data } = await axios.get(
+      `https://reqres.in/api/users?page=${page}`
+    );
+    return data;
+  }
 
   const { status, data, error } = useQuery(
     ["users", page],
