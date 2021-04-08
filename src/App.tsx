@@ -36,7 +36,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Wrapper>
           {isLoading && <LoadingModal />}
-          <Router>
+          <Router basename="/testTask">
             <Switch>
               <Route exact path="/">
                 <Users page={page} setPage={setPage} />

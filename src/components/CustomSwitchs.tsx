@@ -24,7 +24,7 @@ const Icon = withStyles((theme) => ({
       padding: 12,
     },
   },
-}))(({ classes, onClick, ...props }: { classes: any; onClick: () => void }) => {
+}))(({ classes, ...props }: { classes: any }) => {
   return <IconButton className={classes.root} {...props} />;
 });
 
@@ -102,8 +102,8 @@ export const CustomSwitch = () => {
   const { viewType, setViewType } = useContext(myContext);
   return (
     <span>
-      <Icon onClick={() => setViewType(false)}>
-        <Apps />
+      <Icon>
+        <Apps onClick={() => setViewType(false)} />
       </Icon>
       <span>
         <SwitchStyled
@@ -111,8 +111,8 @@ export const CustomSwitch = () => {
           onChange={() => setViewType(!viewType)}
         />
       </span>
-      <Icon onClick={() => setViewType(true)}>
-        <Menu />
+      <Icon>
+        <Menu onClick={() => setViewType(true)} />
       </Icon>
     </span>
   );
