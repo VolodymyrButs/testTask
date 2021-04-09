@@ -1,9 +1,8 @@
 import { CircularProgress, withStyles } from "@material-ui/core";
-import React from "react";
 
 const LoadingWrapper = withStyles((theme) => ({
   root: {
-    position: "absolute",
+    position: "fixed",
     top: 0,
     left: 0,
     height: "100vh",

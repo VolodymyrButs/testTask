@@ -1,12 +1,10 @@
-import { useContext } from "react";
 import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { CustomSwitch, CustomSwitchTheme } from "components/CustomSwitchs";
-import { myContext } from "contextProvider";
 
 const useStylesHeaders = makeStyles((theme) => ({
   header: {
@@ -31,33 +29,35 @@ const useStylesHeaders = makeStyles((theme) => ({
   },
 }));
 
+function useQueryParam() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export const UsersHeader = ({ pageCount }: { pageCount: number }) => {
   const classes = useStylesHeaders();
-  const { page = 1, setPage = () => {} } = useContext(myContext);
+  let query = useQueryParam();
+  const page = query.get("page");
+  const ID = Number(page) || 1;
   return (
     <div className={classes.header}>
       <CustomSwitch />
       <span className={classes.navWrapper}>
-        <IconButton
-          color="primary"
-          onClick={() => setPage(page - 1)}
-          disabled={page === 1}
-          size={"small"}
-        >
-          <ArrowBackIos />
-        </IconButton>
-        <span>Page: {page} </span>
-        <IconButton
-          color="primary"
-          onClick={() => {
-            setPage(page + 1);
-          }}
-          disabled={page === pageCount}
-          size={"small"}
-          edge={"end"}
-        >
-          <ArrowForwardIos />
-        </IconButton>
+        <Link to={ID === 1 ? `/?page=${ID}` : `/?page=${ID - 1}`}>
+          <IconButton color="primary" disabled={ID === 1} size={"small"}>
+            <ArrowBackIos />
+          </IconButton>
+        </Link>
+        <span>Page: {ID} </span>
+        <Link to={ID === pageCount ? `/?page=${ID}` : `/?page=${ID + 1}`}>
+          <IconButton
+            color="primary"
+            disabled={ID === pageCount}
+            size={"small"}
+            edge={"end"}
+          >
+            <ArrowForwardIos />
+          </IconButton>
+        </Link>
       </span>
       <CustomSwitchTheme />
     </div>
@@ -66,13 +66,17 @@ export const UsersHeader = ({ pageCount }: { pageCount: number }) => {
 
 export const UserHeader = () => {
   const classes = useStylesHeaders();
+  const location = useLocation<any>();
+
   return (
     <div className={classes.header}>
-      {" "}
-      <Link to={`/`} className={classes.navLink}>
+      <Link
+        to={location.state ? `/?page=${location.state.page}` : `/?page=1`}
+        className={classes.navLink}
+      >
         <ArrowBackIos />
         BACK
-      </Link>{" "}
+      </Link>
       <CustomSwitchTheme />
     </div>
   );

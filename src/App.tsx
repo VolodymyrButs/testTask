@@ -1,20 +1,28 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core";
-import { unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core/styles";
-import { myContext } from "contextProvider";
+import {
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+  withStyles,
+} from "@material-ui/core/styles";
+import { AppContext } from "contextProvider";
 
 import Users from "Users/Users";
 import User from "User/User";
 import { useContext } from "react";
-import { styled } from "@material-ui/core/styles";
-import { LoadingModal } from "components/Loading";
+import { BadRequestModal } from "components/BadRequest";
 
-const queryClient = new QueryClient();
+const Wrapper = withStyles((theme) => ({
+  root: {
+    minWidth: "100vw",
+    minHeight: "100vh",
+    backgroundColor: theme.palette.background.default,
+  },
+}))(({ classes, ...props }: { classes: any }) => {
+  return <div className={classes.root} {...props} />;
+});
 
 const App = () => {
-  const { isDarkTheme, isLoading } = useContext(myContext);
+  const { isDarkTheme } = useContext(AppContext);
 
   const theme = createMuiTheme({
     palette: {
@@ -22,30 +30,18 @@ const App = () => {
     },
   });
 
-  const Wrapper = styled("div")({
-    position: "relative",
-    minWidth: "100vw",
-    minHeight: "100vh",
-    backgroundColor: theme.palette.background.default,
-  });
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Wrapper>
-          {isLoading && <LoadingModal />}
-          <Router basename="/testTask">
-            <Switch>
-              <Route exact path="/">
-                <Users />
-              </Route>
-              <Route path="/user/:id" children={<User />} />
-            </Switch>
-          </Router>
-        </Wrapper>
-      </ThemeProvider>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <ThemeProvider theme={theme}>
+      <Wrapper>
+        <Router basename="/testTask">
+          <Switch>
+            <Route exact path="/" children={<Users />} />
+            <Route path="/user/:id" children={<User />} />
+            <Route path="*" children={<BadRequestModal />} />
+          </Switch>
+        </Router>
+      </Wrapper>
+    </ThemeProvider>
   );
 };
 

@@ -5,7 +5,7 @@ import Menu from "@material-ui/icons/Menu";
 import Apps from "@material-ui/icons/Apps";
 import { IconButton } from "@material-ui/core";
 
-import { myContext } from "contextProvider";
+import { AppContext } from "contextProvider";
 
 const SwitchWrapperTheme = withStyles((theme) => ({
   root: {
@@ -100,19 +100,19 @@ const SwitchStyled = withStyles((theme) => ({
 );
 
 export const CustomSwitch = () => {
-  const { viewType = true, setViewType = () => {} } = useContext(myContext);
+  const { viewType, setViewType } = useContext(AppContext);
+  const changeViewType = () => setViewType(!viewType);
+  const setViewTypeToIcons = () => setViewType(false);
+  const setViewTypeToList = () => setViewType(true);
   return (
     <span>
-      <Icon onClick={() => setViewType(false)}>
+      <Icon onClick={setViewTypeToIcons}>
         <Apps />
       </Icon>
       <span>
-        <SwitchStyled
-          checked={viewType}
-          onChange={() => setViewType(!viewType)}
-        />
+        <SwitchStyled checked={viewType} onChange={changeViewType} />
       </span>
-      <Icon onClick={() => setViewType(true)}>
+      <Icon onClick={setViewTypeToList}>
         <Menu />
       </Icon>
     </span>
@@ -120,10 +120,11 @@ export const CustomSwitch = () => {
 };
 
 export const CustomSwitchTheme = () => {
-  const { isDarkTheme, setIsDarkTheme = () => {} } = useContext(myContext);
+  const { isDarkTheme, setIsDarkTheme } = useContext(AppContext);
+  const changeTheme = () => setIsDarkTheme(!isDarkTheme);
   return (
     <SwitchWrapperTheme>
-      <Icon onClick={() => setIsDarkTheme(!isDarkTheme)}>
+      <Icon onClick={changeTheme}>
         <Brightness6 />
       </Icon>
     </SwitchWrapperTheme>

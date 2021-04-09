@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { Container } from "@material-ui/core";
 import { makeStyles, Grid } from "@material-ui/core";
 import axios from "axios";
@@ -6,15 +5,16 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 import { UserHeader } from "components/Headers";
-import { myContext } from "contextProvider";
+import { LoadingModal } from "components/Loading";
+import React from "react";
+import { BadRequestModal } from "components/BadRequest";
 
 async function fetchUser(id: string) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const { data } = await axios.get(`https://reqres.in/api/users/${id}`);
   return data.data;
 }
 
-const useStylesUser = makeStyles((theme) => ({
+const useUserStyles = makeStyles((theme) => ({
   container: {
     margin: "0px auto",
     padding: 0,
@@ -62,26 +62,19 @@ const useStylesUser = makeStyles((theme) => ({
 
 const User = () => {
   const { id }: { id: string } = useParams();
-  const { setIsLoading = () => {} } = useContext(myContext);
 
-  const { data, status, error } = useQuery(["user", id], () => fetchUser(id), {
-    staleTime: 5000,
+  const { data, status } = useQuery(["user", id], () => fetchUser(id), {
+    staleTime: 50000,
   });
-  switch (status) {
-    case "loading":
-      setIsLoading(true);
-      break;
-    default:
-      setIsLoading(false);
-      break;
-  }
-  const classes = useStylesUser();
+  const classes = useUserStyles();
+
   return (
     <Container maxWidth="md" className={classes.container}>
-      {status === "error" && <div>Error: {error}</div>}
+      <UserHeader />
+      {status === "loading" && !data && <LoadingModal />}
+      {status === "error" && <BadRequestModal />}
       {status === "success" && (
         <>
-          <UserHeader />
           <Grid item key={data.id} className={classes.root}>
             <div className={classes.item}>
               <img
