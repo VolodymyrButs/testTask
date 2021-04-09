@@ -98,7 +98,7 @@ export const UsersList = ({
                     <Grid item xs={desktop ? 6 : 12} key={user.id}>
                         <Link
                             to={{
-                                pathname: `/user/${19}`,
+                                pathname: `/user/${user.id}`,
                                 state: { page: data.page },
                             }}
                             className={classes.link}

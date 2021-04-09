@@ -1,4 +1,5 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext, useEffect } from 'react'
+import { loadState, saveState } from 'localStorage'
 
 export const AppContext = createContext({
     viewType: false,
@@ -9,16 +10,21 @@ export const AppContext = createContext({
     setIsDarkTheme: (arg: boolean) => {
         arg
     },
-    page: 1,
-    setPage: (arg: number) => {
-        arg
-    },
 })
 
 export const ContextProvider = (props: { children: JSX.Element }) => {
-    const [viewType, setViewType] = useState(false)
-    const [isDarkTheme, setIsDarkTheme] = useState(false)
-    const [page, setPage] = useState(1)
+    const [viewType, setViewType] = useState(
+        loadState() ? loadState().view : false
+    )
+    const [isDarkTheme, setIsDarkTheme] = useState(
+        loadState() ? loadState().dark : false
+    )
+
+    useEffect(() => saveState({ view: viewType, dark: isDarkTheme }), [
+        viewType,
+        isDarkTheme,
+    ])
+
     return (
         <AppContext.Provider
             value={{
@@ -26,8 +32,6 @@ export const ContextProvider = (props: { children: JSX.Element }) => {
                 setViewType,
                 isDarkTheme,
                 setIsDarkTheme,
-                page,
-                setPage,
             }}
         >
             {props.children}

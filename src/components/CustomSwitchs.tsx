@@ -78,8 +78,8 @@ const SwitchStyled = withStyles((theme) => ({
         transition: theme.transitions.create(['background-color', 'border']),
         boxSizing: 'border-box',
     },
-    focusVisible: {},
     checked: {},
+    focusVisible: {},
 }))(
     ({
         classes,
@@ -109,6 +109,7 @@ const SwitchStyled = withStyles((theme) => ({
                     switchBase: classes.switchBase,
                     thumb: classes.thumb,
                     track: classes.track,
+                    checked: classes.checked,
                 }}
                 {...props}
             />
