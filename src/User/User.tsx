@@ -1,12 +1,12 @@
+import { useContext } from "react";
 import { Container } from "@material-ui/core";
 import { makeStyles, Grid } from "@material-ui/core";
-import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import axios from "axios";
-import { myContext } from "contextProvider";
-import React, { useContext } from "react";
 import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 
-import { Link, useParams } from "react-router-dom";
+import { UserHeader } from "components/Headers";
+import { myContext } from "contextProvider";
 
 async function fetchUser(id: string) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -17,7 +17,7 @@ async function fetchUser(id: string) {
 const useStylesUser = makeStyles((theme) => ({
   container: {
     margin: "0px auto",
-    padding: 10,
+    padding: 0,
   },
   root: {
     maxHeight: "calc(100vh - 45px)",
@@ -30,12 +30,7 @@ const useStylesUser = makeStyles((theme) => ({
     margin: 5,
     padding: 5,
   },
-  navLink: {
-    textDecoration: "none",
-    color: theme.palette.text.primary,
-    display: "flex",
-    alignItems: "center",
-  },
+
   link: {
     textDecoration: "none",
     color: theme.palette.text.primary,
@@ -67,7 +62,7 @@ const useStylesUser = makeStyles((theme) => ({
 
 const User = () => {
   const { id }: { id: string } = useParams();
-  const { setIsLoading } = useContext(myContext);
+  const { setIsLoading = () => {} } = useContext(myContext);
 
   const { data, status, error } = useQuery(["user", id], () => fetchUser(id), {
     staleTime: 5000,
@@ -86,10 +81,7 @@ const User = () => {
       {status === "error" && <div>Error: {error}</div>}
       {status === "success" && (
         <>
-          <Link to={`/`} className={classes.navLink}>
-            <ArrowBackIos />
-            BACK
-          </Link>
+          <UserHeader />
           <Grid item key={data.id} className={classes.root}>
             <div className={classes.item}>
               <img

@@ -1,10 +1,11 @@
+import { useContext } from "react";
 import { withStyles, Switch } from "@material-ui/core";
-import React, { useContext } from "react";
-import { myContext } from "contextProvider";
 import Brightness6 from "@material-ui/icons/Brightness6";
 import Menu from "@material-ui/icons/Menu";
 import Apps from "@material-ui/icons/Apps";
 import { IconButton } from "@material-ui/core";
+
+import { myContext } from "contextProvider";
 
 const SwitchWrapperTheme = withStyles((theme) => ({
   root: {
@@ -99,7 +100,7 @@ const SwitchStyled = withStyles((theme) => ({
 );
 
 export const CustomSwitch = () => {
-  const { viewType, setViewType } = useContext(myContext);
+  const { viewType = true, setViewType = () => {} } = useContext(myContext);
   return (
     <span>
       <Icon onClick={() => setViewType(false)}>
@@ -119,7 +120,7 @@ export const CustomSwitch = () => {
 };
 
 export const CustomSwitchTheme = () => {
-  const { isDarkTheme, setIsDarkTheme } = useContext(myContext);
+  const { isDarkTheme, setIsDarkTheme = () => {} } = useContext(myContext);
   return (
     <SwitchWrapperTheme>
       <Icon onClick={() => setIsDarkTheme(!isDarkTheme)}>
