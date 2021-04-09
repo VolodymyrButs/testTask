@@ -1,0 +1,5 @@
+build/
+node_modules/
+public/
+.cache
+react-app-env.d.ts
