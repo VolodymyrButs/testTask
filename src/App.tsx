@@ -34,7 +34,7 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
-                <Router basename="/testTask">
+                <Router>
                     <Switch>
                         <Route exact path="/">
                             <Users />
