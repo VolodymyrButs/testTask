@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core'
 import {
     unstable_createMuiStrictModeTheme as createMuiTheme,
@@ -34,7 +34,7 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
-                <Router>
+                <Router basename="/testTask">
                     <Switch>
                         <Route exact path="/">
                             <Users />
