@@ -1,22 +1,9 @@
 import React, { useContext } from 'react'
-import { withStyles, Switch, IconButton } from '@material-ui/core'
-import Brightness6 from '@material-ui/icons/Brightness6'
-import Menu from '@material-ui/icons/Menu'
-import Apps from '@material-ui/icons/Apps'
+import { IconButton, Switch, withStyles } from '@material-ui/core'
+import { ClassNameMap } from '@material-ui/core/styles/withStyles'
+import { Apps, Menu } from '@material-ui/icons'
 
 import { AppContext } from 'contextProvider'
-import { ClassNameMap } from '@material-ui/core/styles/withStyles'
-
-const SwitchWrapperTheme = withStyles((theme) => ({
-    root: {
-        marginLeft: 5,
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: 110,
-        },
-    },
-}))(({ classes, ...props }: { classes: ClassNameMap<'root'> }) => {
-    return <span className={classes.root} {...props} />
-})
 
 const Icon = withStyles((theme) => ({
     root: {
@@ -40,7 +27,7 @@ const Icon = withStyles((theme) => ({
     }
 )
 
-const SwitchStyled = withStyles((theme) => ({
+const withSwitchStyles = withStyles((theme) => ({
     root: {
         width: 42,
         height: 26,
@@ -80,24 +67,19 @@ const SwitchStyled = withStyles((theme) => ({
     },
     checked: {},
     focusVisible: {},
-}))(
-    ({
-        classes,
-        checked,
-        onChange,
-        ...props
-    }: {
-        classes: ClassNameMap<
-            | 'root'
-            | 'thumb'
-            | 'switchBase'
-            | 'track'
-            | 'focusVisible'
-            | 'checked'
-        >
-        checked: boolean
-        onChange: () => void
-    }) => {
+    s: {
+        display: 'flex',
+        alignContent: 'center',
+    },
+}))
+interface SwitchProps {
+    classes: ClassNameMap<string>
+    checked: boolean
+    onChange: () => void
+}
+
+const SwitchStyled = withSwitchStyles(
+    ({ classes, checked, onChange, ...props }: SwitchProps) => {
         return (
             <Switch
                 focusVisibleClassName={classes.focusVisible}
@@ -117,7 +99,7 @@ const SwitchStyled = withStyles((theme) => ({
     }
 )
 
-export const CustomSwitch = () => {
+export const CustomSwitchView = () => {
     const { viewType, setViewType } = useContext(AppContext)
     const changeViewType = () => setViewType(!viewType)
     const setViewTypeToIcons = () => setViewType(false)
@@ -134,17 +116,5 @@ export const CustomSwitch = () => {
                 <Menu />
             </Icon>
         </span>
-    )
-}
-
-export const CustomSwitchTheme = () => {
-    const { isDarkTheme, setIsDarkTheme } = useContext(AppContext)
-    const changeTheme = () => setIsDarkTheme(!isDarkTheme)
-    return (
-        <SwitchWrapperTheme>
-            <Icon onClick={changeTheme}>
-                <Brightness6 />
-            </Icon>
-        </SwitchWrapperTheme>
     )
 }

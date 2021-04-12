@@ -5,7 +5,8 @@ import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
 import { Link, useLocation } from 'react-router-dom'
 
-import { CustomSwitch, CustomSwitchTheme } from 'components/CustomSwitchs'
+import { CustomSwitchTheme } from 'components/ThemeSwitcher'
+import { CustomSwitchView } from 'components/ViewSwitcher'
 
 const useStylesHeaders = makeStyles((theme) => ({
     header: {
@@ -41,7 +42,7 @@ export const UsersHeader = ({ pageCount }: { pageCount: number }) => {
     const ID = Number(page) || 1
     return (
         <div className={classes.header}>
-            <CustomSwitch />
+            <CustomSwitchView />
             <span className={classes.navWrapper}>
                 <Link to={ID === 1 ? `/?page=${ID}` : `/?page=${ID - 1}`}>
                     <IconButton
