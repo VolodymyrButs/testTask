@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const loadState = () => {
     try {
         const serializedState = window && window.localStorage.getItem('state')
@@ -11,7 +10,7 @@ export const loadState = () => {
     }
 }
 
-export const saveState = (state: any) => {
+export const saveState = (state: {}) => {
     try {
         const serializedState = JSON.stringify(state)
         window && window.localStorage.setItem('state', serializedState)
