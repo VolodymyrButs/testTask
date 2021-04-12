@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
 import { IconButton, Switch, withStyles } from '@material-ui/core'
-import { ClassNameMap } from '@material-ui/core/styles/withStyles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 import { Apps, Menu } from '@material-ui/icons'
 
 import { AppContext } from 'contextProvider'
+import { ClassNameMap } from '@material-ui/core/styles/withStyles'
 
 const Icon = withStyles((theme) => ({
     root: {
@@ -27,7 +28,7 @@ const Icon = withStyles((theme) => ({
     }
 )
 
-const withSwitchStyles = withStyles((theme) => ({
+const switchStyles = makeStyles((theme) => ({
     root: {
         width: 42,
         height: 26,
@@ -72,45 +73,32 @@ const withSwitchStyles = withStyles((theme) => ({
         alignContent: 'center',
     },
 }))
-interface SwitchProps {
-    classes: ClassNameMap<string>
-    checked: boolean
-    onChange: () => void
-}
-
-const SwitchStyled = withSwitchStyles(
-    ({ classes, checked, onChange, ...props }: SwitchProps) => {
-        return (
-            <Switch
-                focusVisibleClassName={classes.focusVisible}
-                disableRipple
-                checked={checked}
-                onChange={onChange}
-                classes={{
-                    root: classes.root,
-                    switchBase: classes.switchBase,
-                    thumb: classes.thumb,
-                    track: classes.track,
-                    checked: classes.checked,
-                }}
-                {...props}
-            />
-        )
-    }
-)
 
 export const CustomSwitchView = () => {
     const { viewType, setViewType } = useContext(AppContext)
     const changeViewType = () => setViewType(!viewType)
     const setViewTypeToIcons = () => setViewType(false)
     const setViewTypeToList = () => setViewType(true)
+    const classes = switchStyles()
     return (
         <span>
             <Icon onClick={setViewTypeToIcons}>
                 <Apps />
             </Icon>
             <span>
-                <SwitchStyled checked={viewType} onChange={changeViewType} />
+                <Switch
+                    focusVisibleClassName={classes.focusVisible}
+                    disableRipple
+                    checked={viewType}
+                    onChange={changeViewType}
+                    classes={{
+                        root: classes.root,
+                        switchBase: classes.switchBase,
+                        thumb: classes.thumb,
+                        track: classes.track,
+                        checked: classes.checked,
+                    }}
+                />
             </span>
             <Icon onClick={setViewTypeToList}>
                 <Menu />
