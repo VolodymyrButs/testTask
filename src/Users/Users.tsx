@@ -27,7 +27,7 @@ async function fetchUsers(ID: number) {
 
 const Users = () => {
   let query = useQueryParam()
-  const page = query.get('page')
+  const page = query.get('page') || 1
   const ID = Number(page)
   const queryClient = useQueryClient()
   const classes = useStyles()
@@ -35,6 +35,7 @@ const Users = () => {
   const { status, data } = useQuery(['users', ID], () => fetchUsers(ID), {
     staleTime: 50000,
   })
+
   useEffect(() => {
     if (ID < data?.total_pages) {
       queryClient.prefetchQuery(['users', ID + 1], () => fetchUsers(ID + 1))
