@@ -27,11 +27,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const BadRequestModal = () => {
+export const BadRequestModal = ({
+  message = 'Something went wrong',
+}: {
+  message?: string
+}) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <p className={classes.paragraph}>Something went wrong</p>
+      <p className={classes.paragraph}>{message}</p>
       <Link to={'/?page=1'} className={classes.link}>
         <Button variant="contained" color="primary">
           To Main Page

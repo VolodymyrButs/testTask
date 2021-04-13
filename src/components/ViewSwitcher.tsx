@@ -73,7 +73,7 @@ const switchStyles = makeStyles((theme) => ({
   },
 }))
 
-export const CustomSwitchView = () => {
+export const ViewSwitcher = () => {
   const { viewType, setViewType } = useContext(AppContext)
   const changeViewType = () =>
     setViewType(viewType === VIEW_TYPE_LIST ? VIEW_TYPE_ICONS : VIEW_TYPE_LIST)

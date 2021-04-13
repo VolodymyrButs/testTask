@@ -1,14 +1,13 @@
-import React from 'react'
-import { IconButton } from '@material-ui/core'
+import React, { ChangeEvent } from 'react'
+import Pagination from '@material-ui/lab/Pagination'
 import { makeStyles } from '@material-ui/core/styles'
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 
-import { CustomSwitchTheme } from 'components/ThemeSwitcher'
-import { CustomSwitchView } from 'components/ViewSwitcher'
+import { ThemeSwitcher } from 'components/ThemeSwitcher'
+import { ViewSwitcher } from 'components/ViewSwitcher'
 
-const useStylesHeaders = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -36,38 +35,32 @@ function useQueryParam() {
 }
 
 export const UsersHeader = ({ pageCount }: { pageCount: number }) => {
-  const classes = useStylesHeaders()
+  const classes = useStyles()
   let query = useQueryParam()
   const page = query.get('page')
-  const ID = Number(page) || 1
+  const pageNumber = Number(page) || 1
+  const history = useHistory()
+  const handleChange = (event: ChangeEvent<unknown>, value: number) => {
+    history.push(`./?page=${value}`)
+  }
   return (
     <div className={classes.header}>
-      <CustomSwitchView />
-      <span className={classes.navWrapper}>
-        <Link to={ID === 1 ? `/?page=${ID}` : `/?page=${ID - 1}`}>
-          <IconButton color="primary" disabled={ID === 1} size={'small'}>
-            <ArrowBackIos />
-          </IconButton>
-        </Link>
-        <span>Page: {ID} </span>
-        <Link to={ID === pageCount ? `/?page=${ID}` : `/?page=${ID + 1}`}>
-          <IconButton
-            color="primary"
-            disabled={ID === pageCount}
-            size={'small'}
-            edge={'end'}
-          >
-            <ArrowForwardIos />
-          </IconButton>
-        </Link>
-      </span>
-      <CustomSwitchTheme />
+      <ViewSwitcher />
+      <Pagination
+        className={classes.navWrapper}
+        color="primary"
+        size="small"
+        count={pageCount}
+        page={pageNumber}
+        onChange={handleChange}
+      />
+      <ThemeSwitcher />
     </div>
   )
 }
 
 export const UserHeader = () => {
-  const classes = useStylesHeaders()
+  const classes = useStyles()
   const location = useLocation<{ page: number }>()
 
   return (
@@ -79,7 +72,7 @@ export const UserHeader = () => {
         <ArrowBackIos />
         BACK
       </Link>
-      <CustomSwitchTheme />
+      <ThemeSwitcher />
     </div>
   )
 }

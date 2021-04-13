@@ -20,36 +20,46 @@ function useQueryParam() {
   return new URLSearchParams(useLocation().search)
 }
 
-async function fetchUsers(ID: number) {
-  const { data } = await axios.get(`https://reqres.in/api/users?page=${ID}`)
+async function fetchUsers(pageNumber: number) {
+  const { data } = await axios.get(
+    `https://reqres.in/api/users?page=${pageNumber}`
+  )
   return data
 }
 
 const Users = () => {
   let query = useQueryParam()
   const page = query.get('page') || 1
-  const ID = Number(page)
+  const pageNumber = Number(page)
   const queryClient = useQueryClient()
   const classes = useStyles()
 
-  const { status, data } = useQuery(['users', ID], () => fetchUsers(ID), {
-    staleTime: 50000,
-  })
+  const { status, data } = useQuery(
+    ['users', pageNumber],
+    () => fetchUsers(pageNumber),
+    {
+      staleTime: 50000,
+    }
+  )
 
   useEffect(() => {
-    if (ID < data?.total_pages) {
-      queryClient.prefetchQuery(['users', ID + 1], () => fetchUsers(ID + 1))
+    if (pageNumber < data?.total_pages) {
+      queryClient.prefetchQuery(['users', pageNumber + 1], () =>
+        fetchUsers(pageNumber + 1)
+      )
     }
-  }, [data, ID, queryClient])
+  }, [data, pageNumber, queryClient])
 
   return (
     <Container maxWidth="md" className={classes.container}>
       <UsersHeader pageCount={Number(data?.total_pages)} />
       {status === 'loading' && !data && <LoadingModal />}
-      {(status === 'error' || isNaN(ID)) && <BadRequestModal />}
-      {status === 'success' && data.data.length === 0 && <BadRequestModal />}
+      {(status === 'error' || isNaN(pageNumber)) && <BadRequestModal />}
+      {status === 'success' && data.data.length === 0 && (
+        <BadRequestModal message={'No data on this page'} />
+      )}
 
-      {status === 'success' && !isNaN(ID) && <UsersList data={data} />}
+      {status === 'success' && !isNaN(pageNumber) && <UsersList data={data} />}
     </Container>
   )
 }

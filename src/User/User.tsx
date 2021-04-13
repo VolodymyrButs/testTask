@@ -70,7 +70,9 @@ const User = () => {
     <Container maxWidth="md" className={classes.container}>
       <UserHeader />
       {status === 'loading' && !data && <LoadingModal />}
-      {status === 'error' && <BadRequestModal />}
+      {status === 'error' && (
+        <BadRequestModal message={`Can't find user with id "${id}"`} />
+      )}
       {status === 'success' && (
         <>
           <Grid item className={classes.root}>

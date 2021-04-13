@@ -36,7 +36,7 @@ const Icon = withStyles((theme) => ({
   }
 )
 
-export const CustomSwitchTheme = () => {
+export const ThemeSwitcher = () => {
   const { isDarkTheme, setIsDarkTheme } = useContext(AppContext)
   const changeTheme = () => setIsDarkTheme(!isDarkTheme)
   return (
