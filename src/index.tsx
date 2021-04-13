@@ -9,12 +9,12 @@ import { ContextProvider } from 'contextProvider'
 const queryClient = new QueryClient()
 
 ReactDOM.render(
-    <React.StrictMode>
-        <ContextProvider>
-            <QueryClientProvider client={queryClient}>
-                <App />
-            </QueryClientProvider>
-        </ContextProvider>
-    </React.StrictMode>,
-    document.getElementById('root')
+  <React.StrictMode>
+    <ContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </ContextProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
 )

@@ -4,3 +4,5 @@ public/
 .cache
 package.json
 yarn.lock
+.eslintrc.js
+tsconfig.json

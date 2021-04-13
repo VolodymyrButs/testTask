@@ -1,21 +1,21 @@
 export const loadState = () => {
-    try {
-        const serializedState = window && window.localStorage.getItem('state')
-        if (serializedState === null) {
-            return []
-        }
-        return JSON.parse(serializedState)
-    } catch (err) {
-        return []
+  try {
+    const serializedState = window && window.localStorage.getItem('state')
+    if (serializedState === null) {
+      return []
     }
+    return JSON.parse(serializedState)
+  } catch (err) {
+    return []
+  }
 }
 
 export const saveState = (state: {}) => {
-    try {
-        const serializedState = JSON.stringify(state)
-        window && window.localStorage.setItem('state', serializedState)
-    } catch (err) {
-        // eslint-disable-next-line no-console
-        console.log(err)
-    }
+  try {
+    const serializedState = JSON.stringify(state)
+    window && window.localStorage.setItem('state', serializedState)
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
+  }
 }
