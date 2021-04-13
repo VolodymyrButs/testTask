@@ -1,23 +1,13 @@
 import React, { useContext } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core'
-import { createMuiTheme, withStyles } from '@material-ui/core/styles'
-import { AppContext } from 'contextProvider'
+import { createMuiTheme } from '@material-ui/core/styles'
 
+import { AppContext } from 'contextProvider'
 import Users from 'Users/Users'
 import User from 'User/User'
 import { BadRequestModal } from 'components/BadRequest'
-import { ClassNameMap } from '@material-ui/core/styles/withStyles'
-
-const Wrapper = withStyles((theme) => ({
-  root: {
-    minWidth: '100vw',
-    minHeight: '100vh',
-    backgroundColor: theme.palette.background.default,
-  },
-}))(({ classes, ...props }: { classes: ClassNameMap<'root'> }) => {
-  return <div className={classes.root} {...props} />
-})
+import { Wrapper } from 'components/MainWrapper'
 
 const App = () => {
   const { isDarkTheme } = useContext(AppContext)
