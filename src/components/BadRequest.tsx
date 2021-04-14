@@ -36,7 +36,7 @@ export const BadRequestModal = ({
   return (
     <div className={classes.root}>
       <p className={classes.paragraph}>{message}</p>
-      <Link to={'/?page=1'} className={classes.link}>
+      <Link to={'/'} className={classes.link}>
         <Button variant="contained" color="primary">
           To Main Page
         </Button>
